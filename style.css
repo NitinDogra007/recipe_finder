@@ -1,0 +1,141 @@
+:root {
+	--cherry: #8d0b41;
+	--sand: #d39d55;
+	--light-yellow: #fff8e6;
+	--cardboard: #d6cfb4;
+}
+
+* {
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box;
+	font-family: 'Clash Display', sans-serif;
+}
+
+body {
+	background-color: var(--light-yellow);
+	margin-left: 100px;
+	margin-right: 100px;
+}
+
+.header {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.primary-heading {
+	text-align: center;
+	font-size: 50px;
+	margin-top: 50px;
+	margin-bottom: 20px;
+	border: 1px solid red;
+}
+
+#search {
+	width: 400px;
+	height: 40px;
+	border-radius: 10px;
+	border: 3px solid black;
+	background: var(--cherry);
+	filter: drop-shadow(6px 4px rgb(0, 0, 0));
+	margin-bottom: 10px;
+	color: white;
+	font-size: 15px;
+	font-weight: 600;
+	text-indent: 10px;
+}
+
+#search::placeholder {
+	color: white;
+	font-size: 15px;
+	font-weight: 600;
+}
+
+.btn {
+	text-align: left;
+	width: 150px;
+	height: 40px;
+	border-radius: 10px;
+	border: 3px solid black;
+	background: var(--sand);
+	filter: drop-shadow(6px 4px rgb(0, 0, 0));
+	padding-left: 25px;
+	font-size: 15px;
+	font-weight: 600;
+}
+
+.recipes {
+	border: 1px solid red;
+	width: 100%;
+	margin-top: 20px;
+	margin-bottom: 20px;
+
+	display: grid;
+	grid-template-columns: repeat(
+		auto-fit,
+		minmax(250px, 1fr)
+	); /* Flexible columns */
+	gap: 50px; /* Adds spacing between grid items */
+	padding: 10px; /* Adds spacing around the grid */
+}
+
+.card {
+	border: 3px solid #000;
+	height: 358px;
+	width: 258px;
+	border-radius: 10px;
+	background: var(--cardboard);
+	filter: drop-shadow(6px 4px rgb(0, 0, 0));
+	padding-left: 25px;
+	font-size: 15px;
+	font-weight: 600;
+
+	overflow: hidden; /* Ensures the image stays inside the border */
+	display: flex;
+	flex-direction: column; /* Ensures vertical stacking */
+	align-items: center; /* Centers content horizontally */
+	padding: 0; /* Removes padding to allow full image width */
+}
+
+.recipe-img {
+	width: 100%;
+	height: 193px;
+	object-fit: cover; /* Ensures the image fits inside without distortion */
+	background-repeat: no-repeat;
+	border-radius: 10px 10px 0 0;
+	border: 1px 1px solid black;
+	border-bottom: 3px solid black; /* Adds a bottom border */
+}
+
+.recipe-info {
+	padding-top: 13px;
+	padding-left: 9px;
+}
+
+.recipe-name {
+	font-size: 18px;
+	font-weight: 500;
+	margin-bottom: 10px;
+}
+
+.recipe-desc {
+	font-size: 15px;
+	font-weight: 400;
+}
+
+/* Grid Responsiveness */
+@media (max-width: 768px) {
+	.recipes {
+		grid-template-columns: repeat(
+			auto-fit,
+			minmax(250px, 1fr)
+		); /* Smaller columns for tablets */
+	}
+}
+
+@media (max-width: 480px) {
+	.recipes {
+		grid-template-columns: 1fr; /* Single column for mobile */
+	}
+}
