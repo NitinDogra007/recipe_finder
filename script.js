@@ -1,5 +1,7 @@
 const searchBox = document.querySelector('#search');
 const container = document.querySelector('.recipes');
+const closeModal = document.querySelector('.close-button');
+const modal = document.querySelector('.modal');
 let recipe = ''; // Declare a variable to store the search value
 
 // Listen for changes in the search box
@@ -41,28 +43,67 @@ async function fetchData() {
 	// renderData(data[0]);
 }
 
+// Render Recipe Cards
 function renderData(recipeData) {
-	// Ensure recipeData contains the necessary properties, e.g., title, image, and description
-	const { title, image_url, description } = recipeData;
+	const { title, ingredients, instructions } = recipeData;
 
-	// Render the data to the container
-	const cardHTML = `
-    <article class="card">
+	// Create card dynamically
+	const card = document.createElement('article');
+	card.classList.add('card');
+	card.innerHTML = `
         <img
             class="recipe-img"
             src="images/sky.jpg"
-            alt="Delicious Egg Sandwich"
+            alt="${title}"
         />
         <div class="recipe-info">
             <h3 class="recipe-name">${title}</h3>
-            <p class="recipe-desc">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Obcaecati, quibusdam.
-            </p>
+            <button class='open-button'>Open</button>
         </div>
-    </article>
     `;
 
-	// Append the cardHTML to the container's existing content
-	container.innerHTML += cardHTML;
+	/* // Attach click event for the modal
+	card.addEventListener('click', () => {
+		showModal(title, ingredients, instructions);
+	}); */
+
+	// Create modal dynamically for each card
+	const modal = document.createElement('dialog');
+	modal.classList.add('modal');
+	modal.innerHTML = `
+    <div class="modal-content">
+        <h3>${title}</h3>
+        <p><strong>Ingredients:</strong></p>
+        <ul>
+            ${ingredients
+							.split('|')
+							.map((ingredient) => `<li>${ingredient.trim()}</li>`)
+							.join('')}
+        </ul>
+        <p><strong>Instructions:</strong></p>
+        <ol>
+            ${instructions
+							.split('.')
+							.filter((instruction) => instruction.trim() !== '') // Remove empty entries after splitting
+							.map((instruction) => `<li>${instruction.trim()}</li>`)
+							.join('')}
+        </ol>
+        <button class="close-button">Close</button>
+    </div>
+`;
+
+	// Append card and modal to the container
+	container.appendChild(card);
+	document.body.appendChild(modal); // Assuming modal is appended to the body
+
+	const openModal = card.querySelector('.open-button');
+	const closeModal = modal.querySelector('.close-button');
+
+	openModal.addEventListener('click', () => {
+		modal.showModal();
+	});
+
+	closeModal.addEventListener('click', () => {
+		modal.close();
+	});
 }
