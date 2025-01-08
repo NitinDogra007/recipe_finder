@@ -94,7 +94,7 @@ body {
 	overflow: hidden; /* Ensures the image stays inside the border */
 	display: flex;
 	flex-direction: column; /* Ensures vertical stacking */
-	align-items: center; /* Centers content horizontally */
+	text-align: center;
 	padding: 0; /* Removes padding to allow full image width */
 }
 
@@ -122,6 +122,59 @@ body {
 .recipe-desc {
 	font-size: 15px;
 	font-weight: 400;
+}
+
+/* Modal */
+.modal {
+	background-color: #8d0b41;
+	color: white;
+	padding: 2em; /* Adjust padding for better spacing */
+	max-width: 500px; /* Set a max-width for the modal */
+	width: 100%; /* Make it responsive */
+	position: fixed; /* Fix it to the screen */
+	top: 50%; /* Position it vertically in the middle */
+	left: 50%; /* Position it horizontally in the middle */
+	transform: translate(
+		-50%,
+		-50%
+	); /* Correct the positioning to truly center it */
+	border-radius: 10px;
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Add a shadow for better appearance */
+	/* z-index: 1000; Ensure it is on top of other content */
+}
+
+.modal > * {
+	margin: 0 0 0.5rem 0; /* Adjust the margin for child elements */
+}
+
+/* Add a backdrop to cover the screen */
+.modal::before {
+	content: '';
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+	z-index: -1; /* Place the backdrop behind the modal */
+}
+
+.open-button {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	height: 40px;
+	border: none;
+	border-top: 3px solid black;
+	border-radius: 0 0 5px 5px;
+	cursor: pointer;
+	transition: ease-in 0.1s;
+}
+
+.open-button:hover {
+	background: var(--cherry);
+	color: white;
 }
 
 /* Grid Responsiveness */
