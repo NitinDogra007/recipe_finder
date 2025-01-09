@@ -72,16 +72,16 @@ function renderData(recipeData) {
 	modal.classList.add('modal');
 	modal.innerHTML = `
     <div class="modal-content">
-        <h3>${title}</h3>
+        <h3 class='modal-title'>${title}</h3>
         <p><strong>Ingredients:</strong></p>
-        <ul>
+        <ul class='modal-ingredients'>
             ${ingredients
 							.split('|')
 							.map((ingredient) => `<li>${ingredient.trim()}</li>`)
 							.join('')}
         </ul>
         <p><strong>Instructions:</strong></p>
-        <ol>
+        <ol class='modal-instructions'>
             ${instructions
 							.split('.')
 							.filter((instruction) => instruction.trim() !== '') // Remove empty entries after splitting
