@@ -1,8 +1,5 @@
 const searchBox = document.querySelector('#search');
 const container = document.querySelector('.recipes');
-const closeModal = document.querySelector('.close-button');
-const modal = document.querySelector('.modal');
-
 let recipe = ''; // Declare a variable to store the search value
 
 // Event Listener for Search Box Input
