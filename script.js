@@ -31,7 +31,7 @@ async function fetchData(query) {
 		`https://api.api-ninjas.com/v1/recipe?query=${query}`,
 		{
 			headers: {
-				'X-Api-Key': 'UmYVBUS2MZW3xMP6+JNGrA==IwhxvYj45FLAlX84',
+				'X-Api-Key': 'API_KEY_HERE',
 			},
 		}
 	);
