@@ -2,9 +2,10 @@ const searchBox = document.querySelector('#search');
 const container = document.querySelector('.recipes');
 const closeModal = document.querySelector('.close-button');
 const modal = document.querySelector('.modal');
+
 let recipe = ''; // Declare a variable to store the search value
 
-// Listen for changes in the search box
+// Event Listener for Search Box Input
 searchBox.addEventListener('change', async (e) => {
 	recipe = e.target.value.trim(); // Store the trimmed value in the recipe variable
 	console.log('Search query:', recipe);
@@ -12,17 +13,22 @@ searchBox.addEventListener('change', async (e) => {
 	// Clear previous search results before fetching new data
 	container.innerHTML = '';
 
-	// Call fetchData when the recipe value changes
+	// Only fetch data if recipe is not empty
 	if (recipe) {
-		await fetchData(recipe);
+		try {
+			await fetchData(recipe);
+		} catch (error) {
+			console.error('Error fetching data:', error);
+		}
 	}
 
+	// Clear the search box after search
 	e.target.value = '';
 });
 
-async function fetchData() {
+async function fetchData(query) {
 	const response = await fetch(
-		`https://api.api-ninjas.com/v1/recipe?query=${recipe}`,
+		`https://api.api-ninjas.com/v1/recipe?query=${query}`,
 		{
 			headers: {
 				'X-Api-Key': 'UmYVBUS2MZW3xMP6+JNGrA==IwhxvYj45FLAlX84',
@@ -31,20 +37,20 @@ async function fetchData() {
 	);
 
 	if (!response.ok) {
-		throw new Error(`Response status: ${response.status}`);
+		throw new Error(`Failed to fetch data. Status: ${response.status}`);
 	}
 
 	const data = await response.json();
 	console.log(data);
 
-	data.map((item) => {
-		renderData(item);
+	// Render each recipe data
+	data.forEach((item) => {
+		renderRecipeCard(item);
 	});
-	// renderData(data[0]);
 }
 
 // Render Recipe Cards
-function renderData(recipeData) {
+function renderRecipeCard(recipeData) {
 	const { title, ingredients, instructions } = recipeData;
 
 	// Create card dynamically
@@ -62,48 +68,49 @@ function renderData(recipeData) {
         </div>
     `;
 
-	/* // Attach click event for the modal
-	card.addEventListener('click', () => {
-		showModal(title, ingredients, instructions);
-	}); */
+	// Create Modal for Recipe Details
+	const modal = createModal(title, ingredients, instructions);
 
-	// Create modal dynamically for each card
-	const modal = document.createElement('dialog');
-	modal.classList.add('modal');
-	modal.innerHTML = `
-    <div class="modal-content">
-        <h3 class='modal-title'>${title}</h3>
-        <p><strong>Ingredients:</strong></p>
-        <ul class='modal-ingredients'>
-            ${ingredients
-							.split('|')
-							.map((ingredient) => `<li>${ingredient.trim()}</li>`)
-							.join('')}
-        </ul>
-        <p><strong>Instructions:</strong></p>
-        <ol class='modal-instructions'>
-            ${instructions
-							.split('.')
-							.filter((instruction) => instruction.trim() !== '') // Remove empty entries after splitting
-							.map((instruction) => `<li>${instruction.trim()}</li>`)
-							.join('')}
-        </ol>
-        <button class="close-button">Close</button>
-    </div>
-`;
-
-	// Append card and modal to the container
+	// Append Recipe Card and Modal to Container
 	container.appendChild(card);
-	document.body.appendChild(modal); // Assuming modal is appended to the body
+	document.body.appendChild(modal);
 
-	const openModal = card.querySelector('.open-button');
-	const closeModal = modal.querySelector('.close-button');
+	const openModalButton = card.querySelector('.open-button');
+	const closeModalButton = modal.querySelector('.close-button');
 
-	openModal.addEventListener('click', () => {
+	openModalButton.addEventListener('click', () => {
 		modal.showModal();
 	});
 
-	closeModal.addEventListener('click', () => {
+	closeModalButton.addEventListener('click', () => {
 		modal.close();
 	});
+}
+
+// Create Modal Dynamically
+function createModal(title, ingredients, instructions) {
+	const modal = document.createElement('dialog');
+	modal.classList.add('modal');
+	modal.innerHTML = `
+	  <div class="modal-content">
+		<h3 class="modal-title">${title}</h3>
+		<p><strong>Ingredients:</strong></p>
+		<ul class="modal-ingredients">
+		  ${ingredients
+				.split('|')
+				.map((ingredient) => `<li>${ingredient.trim()}</li>`)
+				.join('')}
+		</ul>
+		<p><strong>Instructions:</strong></p>
+		<ol class="modal-instructions">
+		  ${instructions
+				.split('.')
+				.filter((instruction) => instruction.trim() !== '')
+				.map((instruction) => `<li>${instruction.trim()}</li>`)
+				.join('')}
+		</ol>
+		<button class="close-button">Close</button>
+	  </div>
+	`;
+	return modal;
 }
