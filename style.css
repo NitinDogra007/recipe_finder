@@ -126,7 +126,7 @@ body {
 
 /* Modal */
 .modal {
-	background-color: #8d0b41;
+	background-color: #540a29;
 	color: white;
 	padding: 2em; /* Adjust padding for better spacing */
 	max-width: 500px; /* Set a max-width for the modal */
@@ -143,6 +143,18 @@ body {
 	/* z-index: 1000; Ensure it is on top of other content */
 }
 
+.modal-title {
+	margin-bottom: 10px;
+}
+
+.modal-ingredients {
+	margin-bottom: 10px;
+}
+
+.modal-instructions {
+	margin-bottom: 10px;
+}
+
 .modal > * {
 	margin: 0 0 0.5rem 0; /* Adjust the margin for child elements */
 }
@@ -155,7 +167,7 @@ body {
 	left: 0;
 	right: 0;
 	bottom: 0;
-	background: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+
 	z-index: -1; /* Place the backdrop behind the modal */
 }
 
@@ -175,6 +187,27 @@ body {
 .open-button:hover {
 	background: var(--cherry);
 	color: white;
+}
+
+.close-button {
+	position: absolute;
+	margin-top: 10px;
+	left: 0;
+	right: 0;
+	height: 50px;
+	border: none;
+	background-color: var(--sand);
+	color: white;
+	font-weight: 400;
+	border-top: 3px solid white;
+	cursor: pointer;
+	transition: ease-in 0.1s;
+}
+
+.close-button:hover {
+	background: #b3731f;
+	color: white;
+	font-weight: 600;
 }
 
 /* Grid Responsiveness */
